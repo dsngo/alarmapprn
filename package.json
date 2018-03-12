@@ -4,16 +4,51 @@
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
-    "test": "jest"
+    "test": "jest",
+    "rnra": "react-native run-android",
+    "a:stop": "cd android && ./gradlew --stop && cd ..",
+    "a:clean": "cd android && ./gradlew clean && cd ..",
+    "a:release": "cd android && ./gradlew assembleRelease && cd ..",
+    "a:tr": "react-native run-android --variant=release",
+    "lint": "eslint src/**/*.{js,jsx} --quiet"
+  },
+  "rnpm": {
+    "assets": [
+      "./assets/fonts"
+    ]
   },
   "dependencies": {
+    "prop-types": "^15.6.0",
     "react": "16.3.0-alpha.1",
-    "react-native": "0.54.1"
+    "react-native": "0.54.1",
+    "react-native-image-picker": "^0.26.7",
+    "react-native-material-ui": "^1.18.0",
+    "react-native-modal": "^4.1.1",
+    "react-native-modal-datetime-picker": "^4.13.0",
+    "react-native-progress": "^3.4.0",
+    "react-native-push-notification": "^3.0.2",
+    "react-native-sound": "^0.10.4",
+    "react-navigation": "^1.0.0-beta.22",
+    "react-redux": "^5.0.6",
+    "redux": "^3.7.2",
+    "redux-thunk": "^2.2.0"
   },
   "devDependencies": {
+    "babel-eslint": "^8.1.2",
     "babel-jest": "22.4.1",
     "babel-preset-react-native": "4.0.0",
+    "eslint": "^4.9.0",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-config-react": "^1.1.7",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-jsx-a11y": "^6.0.2",
+    "eslint-plugin-prettier": "^2.4.0",
+    "eslint-plugin-react": "^7.5.1",
     "jest": "22.4.2",
+    "prettier": "^1.9.2",
+    "react-native-cli": "^2.0.1",
+    "react-native-vector-icons": "^4.4.3",
     "react-test-renderer": "16.3.0-alpha.1"
   },
   "jest": {

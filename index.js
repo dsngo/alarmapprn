@@ -1,4 +1,3 @@
-import { AppRegistry } from 'react-native';
-import App from './App';
+import renderReactNativeApp from './src';
 
-AppRegistry.registerComponent('alarmapprn', () => App);
+renderReactNativeApp();
