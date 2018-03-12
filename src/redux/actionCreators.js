@@ -24,22 +24,24 @@ export const updateAppStatus = (key, value) => ({
 
 //  API CALLS
 export const pullDataFromStorage = () => async dispatch => {
-  const userAlarms = JSON.parse(await AsyncStorage.getItem('userAlarmsData'));
-  // console.log('userAlarm')
-  // console.log(userAlarms);
-  // console.warn("LOADING")
-  return dispatch({
-    type: 'PULL_DATA_FROM_STORAGE',
-    userAlarms,
-  });
+  try {
+    const userAlarms = JSON.parse(await AsyncStorage.getItem('userAlarmsData'));
+    return dispatch({
+      type: 'PULL_DATA_FROM_STORAGE',
+      userAlarms,
+    });
+  } catch (e) {
+    return console.warn(e);
+  }
 };
 
 export const saveDataToStorage = () => async (dispatch, getState) => {
-  const dataString = JSON.stringify(await getState().userAlarms);
-  // console.log('dataString')
-  // console.log(dataString);
-  // console.warn('SAVING')
-  return AsyncStorage.setItem('userAlarmsData', dataString)
-    .then(() => dispatch({ type: 'SAVE_DATA_TO_STORAGE' }))
-    .catch(() => console.warn('Error'));
+  try {
+    const dataString = JSON.stringify(await getState().userAlarms);
+    return AsyncStorage.setItem('userAlarmsData', dataString)
+      .then(() => dispatch({ type: 'SAVE_DATA_TO_STORAGE' }))
+      .catch(() => console.warn('Error'));
+  } catch (e) {
+    return console.warn(e);
+  }
 };
