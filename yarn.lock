@@ -4613,17 +4613,17 @@ react-native-drawer-layout@1.3.2:
   dependencies:
     react-native-dismiss-keyboard "1.0.0"
 
-react-native-image-picker@^0.26.7:
+"react-native-image-picker@git+https://github.com/geart891/react-native-image-picker.git":
   version "0.26.7"
-  resolved "https://registry.yarnpkg.com/react-native-image-picker/-/react-native-image-picker-0.26.7.tgz#ad2ee957f7f6cc01396893ea03d84cb2adb2e376"
+  resolved "git+https://github.com/geart891/react-native-image-picker.git#a9164934d46d20a20c0fe967642d6586cd67921d"
 
 react-native-material-design-styles@^0.2.6:
   version "0.2.7"
   resolved "https://registry.yarnpkg.com/react-native-material-design-styles/-/react-native-material-design-styles-0.2.7.tgz#428560ef4d0659db1163c9f9b5476d886ed22d57"
 
-react-native-material-ui@^1.20.0:
-  version "1.20.0"
-  resolved "https://registry.yarnpkg.com/react-native-material-ui/-/react-native-material-ui-1.20.0.tgz#7a953ee87f2b80adadff3d7d62bda1e7aac06afd"
+"react-native-material-ui@git+https://github.com/geart891/react-native-material-ui.git":
+  version "1.21.0"
+  resolved "git+https://github.com/geart891/react-native-material-ui.git#d88bc6754fe2896d93a3d3ebd51ee6fd372bbb10"
   dependencies:
     color "2.0.1"
     lodash.merge "^4.0.0"
@@ -4658,9 +4658,9 @@ react-native-progress@^3.4.0:
   dependencies:
     prop-types "^15.5.8"
 
-react-native-push-notification@^3.0.2:
+"react-native-push-notification@git+https://github.com/geart891/react-native-push-notification.git":
   version "3.0.2"
-  resolved "https://registry.yarnpkg.com/react-native-push-notification/-/react-native-push-notification-3.0.2.tgz#3fa7d654cfd915436597b0dd5ba8b0f898c4b0f5"
+  resolved "git+https://github.com/geart891/react-native-push-notification.git#ace4ec1b18c74c4cfc8a35275df3f86af52f6fbb"
 
 react-native-safe-area-view@^0.7.0:
   version "0.7.0"
@@ -4668,9 +4668,9 @@ react-native-safe-area-view@^0.7.0:
   dependencies:
     hoist-non-react-statics "^2.3.1"
 
-react-native-sound@^0.10.4:
+"react-native-sound@git+https://github.com/geart891/react-native-sound.git":
   version "0.10.9"
-  resolved "https://registry.yarnpkg.com/react-native-sound/-/react-native-sound-0.10.9.tgz#6b00b0f4afd017cde09fbb9d171df1b5d5b851a8"
+  resolved "git+https://github.com/geart891/react-native-sound.git#b87062ab0c54eda341dc9fd2288ec3b302443685"
 
 react-native-tab-view@^0.0.74:
   version "0.0.74"
@@ -4678,7 +4678,7 @@ react-native-tab-view@^0.0.74:
   dependencies:
     prop-types "^15.6.0"
 
-react-native-vector-icons@^4.4.3:
+react-native-vector-icons@^4.5.0:
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/react-native-vector-icons/-/react-native-vector-icons-4.5.0.tgz#6b95619e64f62f05f579f74a01fe5640df95158b"
   dependencies:

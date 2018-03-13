@@ -1,17 +1,23 @@
 /* eslint no-nested-ternary:0 */
 import React, { Component } from 'react';
-import { PanResponder, View, TouchableHighlight, Animated } from 'react-native';
+import {
+  PanResponder,
+  View,
+  TouchableHighlight,
+  Animated,
+  ViewPropTypes,
+} from 'react-native';
 
 import PropTypes from 'prop-types';
 
 const propTypes = {
   active: PropTypes.bool,
-  style: View.propTypes.style,
+  style: ViewPropTypes.style,
   inactiveButtonColor: PropTypes.string,
   inactiveButtonPressedColor: PropTypes.string,
   activeButtonColor: PropTypes.string,
   activeButtonPressedColor: PropTypes.string,
-  buttonShadow: View.propTypes.style,
+  buttonShadow: ViewPropTypes.style,
   activeBackgroundColor: PropTypes.string,
   inactiveBackgroundColor: PropTypes.string,
   buttonRadius: PropTypes.number,

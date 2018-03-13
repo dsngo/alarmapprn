@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { connect } from 'react-redux';
 import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
@@ -12,13 +12,14 @@ const styles = StyleSheet.create({
     paddingBottom: 16,
   },
   iconAlarm: {
-    textAlign: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
     paddingTop: 50,
     paddingBottom: 80,
   },
-  viewButton: {
-    textAlign: 'center',
-  },
+  // viewButton: {
+  //   textAlign: 'center',
+  // },
 });
 
 const propTypes = {
@@ -64,9 +65,9 @@ class AlarmShow extends Component {
     const alarmDetail = this.props.userAlarms.find(
       e => e.id.toString() === this.props.navigation.state.params.key
     );
-    console.log(this.props.userAlarms);
-    console.log(this.props.navigation.state.params.key);
-    console.log(alarmDetail);
+    // console.log(this.props.userAlarms);
+    // console.log(this.props.navigation.state.params.key);
+    // console.log(alarmDetail);
     return (
       <Container>
         <Toolbar
@@ -74,12 +75,14 @@ class AlarmShow extends Component {
           onLeftElementPress={() => this.props.navigation.goBack()}
           centerElement=""
         />
-        <Icon name="alarm" size={250} style={styles.iconAlarm} />
+        <View style={styles.iconAlarm}>
+          <Icon name="alarm" size={250} />
+        </View>
         <Button
           raised
           primary
           text="瞑想導入へ"
-          style={styles.viewButton}
+          style={{ container: styles.viewButton }}
           onPress={() =>
             navigate('alarmShowDetail', {
               alarmDetail,

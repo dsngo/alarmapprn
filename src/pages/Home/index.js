@@ -11,10 +11,10 @@ import {
   View,
   CameraRoll, // eslint-disable-line
 } from 'react-native';
-import { ListItem, Toolbar, Icon } from 'react-native-material-ui';
+import { ListItem, Toolbar } from 'react-native-material-ui';
 import PNotification from 'react-native-push-notification';
 import { connect } from 'react-redux';
-import MaterialSwitch from '../../components/Switch';
+// import MaterialSwitch from '../../components/Switch';
 import Container from '../../components/Container';
 import {
   updateUserAlarm,
@@ -49,6 +49,9 @@ class Home extends Component {
     isEditing: false,
   };
   componentWillMount() {
+    if (this.state.isEditing) {
+      this.state.isEditing = false;
+    }
     this.props.pullDataFromStorage();
     testNavigate(this.props);
   }
@@ -117,7 +120,7 @@ class Home extends Component {
     const { isEditing } = this.state;
     return (
       <Toolbar
-        key="toolbar"
+        // key="toolbar"
         onLeftElementPress={() => this.handleToggleEditAlarm()}
         leftElement={isEditing ? 'done' : 'edit'}
         // centerElement="ブレインストレッチ"
@@ -155,7 +158,7 @@ class Home extends Component {
     );
   };
   renderAlarm = (alarmContent, route) => {
-    const { hours, minutes, daysOfWeek, active, label } = alarmContent;
+    const { hours, minutes, daysOfWeek, label } = alarmContent;
     const { isEditing } = this.state;
     return (
       <View key={`renderedAlarm-${alarmContent.id}`}>
@@ -163,13 +166,13 @@ class Home extends Component {
           divider
           numberOfLines="dynamic"
           style={{
+            container: { height: 115 },
             primaryText: {
-              paddingTop: 20,
-              paddingBottom: 5,
+              paddingTop: 30,
               fontSize: 50,
               fontWeight: '900',
             },
-            tertiaryText: { paddingTop: 5, fontSize: 15 },
+            tertiaryText: { fontSize: 15, paddingLeft: 5 },
             leftElementContainer: {
               paddingTop: 12,
             },
@@ -187,26 +190,7 @@ class Home extends Component {
                   key: alarmContent.id.toString(),
                 })
           }
-          // leftElement={
-          //   isEditing ? (
-          //     <Icon name="remove-circle" color="#F44336" size={40} />
-          //   ) : null
-          // }
-          rightElement={
-            isEditing ? (
-              <Icon name="keyboard-arrow-right" />
-            ) : (
-              <MaterialSwitch
-                active={active || false}
-                activeBackgroundColor="#F48FB1"
-                inactiveBackgroundColor="#E0E0E0"
-                activeButtonColor="#D81B60"
-                activeButtonPressedColor="#D81B60"
-                inactiveButtonColor="#fff"
-                inactiveButtonPressedColor="#fff"
-              />
-            )
-          }
+          rightElement={isEditing ? 'keyboard-arrow-right' : 'alarm'}
         />
       </View>
     );
@@ -239,3 +223,17 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);
+
+/* for the switch feature
+(
+              <MaterialSwitch
+                active={active || false}
+                activeBackgroundColor="#F48FB1"
+                inactiveBackgroundColor="#E0E0E0"
+                activeButtonColor="#D81B60"
+                activeButtonPressedColor="#D81B60"
+                inactiveButtonColor="#fff"
+                inactiveButtonPressedColor="#fff"
+              />
+            ) 
+*/

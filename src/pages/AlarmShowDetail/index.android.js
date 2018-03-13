@@ -1,4 +1,4 @@
-import { StyleSheet, Text, Image } from 'react-native';
+import { StyleSheet, Text, Image, View } from 'react-native';
 import React, { Component } from 'react';
 import Sound from 'react-native-sound';
 import * as Progress from 'react-native-progress';
@@ -61,78 +61,108 @@ const propTypes = {
 class AlarmShowDetail extends Component {
   state = {
     progress: 0,
-    alarm: {},
-    alarmState: 'playing',
-    playingProgress: '',
+    playerStatus: 'play',
   };
 
-  componentDidMount() {
-    const { sound } = this.props.navigation.state.params.alarmDetail;
-    this.playSound(sound);
+  componentWillMount() {
+    // SAVE SOUND FILE TO : android/app/src/main/res/raw (Android) - Add Files to [PROJECTNAME] (IOS)
+    this.sound = new Sound(
+      this.props.navigation.state.params.alarmDetail.sound,
+      Sound.MAIN_BUNDLE,
+      () => {
+        this.sound.play();
+        this.duration = this.sound.getDuration();
+        this.handleUpdateProgressBar();
+      }
+    );
   }
 
   componentWillUnmount() {
-    this.state.alarm.pause();
+    clearInterval(this.pInterval);
+    this.sound.stop();
+    this.sound.release();
   }
-
-  playSound = soundName => {
-    // SAVE SOUND FILE TO : android/app/src/main/res/raw (Android) - Add Files to [PROJECTNAME] (IOS)
-    const sound = new Sound(soundName, Sound.MAIN_BUNDLE, err => {
-      if (err) {
-        console.log(err.message); // eslint-disable-line
-      } else {
-        sound.play();
-        this.updateProgressBar(sound);
-        this.setState(prevState => ({
-          ...prevState,
-          alarm: sound,
-        }));
-      }
-    });
-  };
-
-  updateProgressBar = sound => {
-    const playingProgress = setInterval(() => {
-      sound.getCurrentTime(seconds => {
-        const duration = sound.getDuration();
-        const progress = Math.round(seconds / duration * 100) / 100;
-        this.setState(prevState => ({
-          ...prevState,
-          progress,
-        }));
+  sound;
+  pInterval;
+  duration;
+  handleUpdateProgressBar = () => {
+    this.pInterval = setInterval(() => {
+      this.sound.getCurrentTime(s => {
+        this.setState({ progress: s / this.duration });
+        console.log(this.state.progress);
       });
     }, 1000);
-    this.setState(prevState => ({
-      ...prevState,
-      playingProgress,
-    }));
     if (this.state.progress >= 1) {
-      clearInterval(this.state.playingProgress);
-      this.setState(prevState => ({
-        ...prevState,
-        alarmState: 'stopped',
-      }));
+      this.setState({ playerStatus: 'stop' });
     }
   };
-
-  actionAlarm = (alarm, alarmState) => {
-    const newAlarmState = alarmState === 'playing' ? 'paused' : 'playing';
-    if (alarmState === 'playing') {
-      alarm.pause();
-      clearInterval(this.state.playingProgress);
+  handlePressControl = () => {
+    if (this.state.playerStatus === 'play') {
+      this.sound.pause();
+      this.setState({ playerStatus: 'pause' });
     } else {
-      alarm.play();
-      this.updateProgressBar(alarm);
+      this.sound.play();
+      this.setState({ playerStatus: 'play' });
     }
-    this.setState(prevState => ({
-      ...prevState,
-      alarmState: newAlarmState,
-    }));
   };
+  // playSound = soundName => {
+  //   // SAVE SOUND FILE TO : android/app/src/main/res/raw (Android) - Add Files to [PROJECTNAME] (IOS)
+  //   const sound = new Sound(soundName, Sound.MAIN_BUNDLE, err => {
+  //     if (err) {
+  //       console.log(err.message); // eslint-disable-line
+  //     } else {
+  //       sound.play();
+  //       this.updateProgressBar(sound);
+  //       this.setState(prevState => ({
+  //         ...prevState,
+  //         alarm: sound,
+  //       }));
+  //     }
+  //   });
+  // };
+
+  // updateProgressBar = sound => {
+  //   const playingProgress = setInterval(() => {
+  //     sound.getCurrentTime(seconds => {
+  //       const duration = sound.getDuration();
+  //       const progress = Math.round(seconds / duration * 100);
+  //       this.setState(prevState => ({
+  //         ...prevState,
+  //         progress,
+  //       }));
+  //     });
+  //   }, 100);
+  //   this.setState(prevState => ({
+  //     ...prevState,
+  //     playingProgress,
+  //   }));
+  //   if (this.state.progress >= 100) {
+  //     clearInterval(this.state.playingProgress);
+  //     this.setState(prevState => ({
+  //       ...prevState,
+  //       alarmState: 'stopped',
+  //     }));
+  //   }
+  // };
+
+  // actionAlarm = (alarm, alarmState) => {
+  //   const newAlarmState = alarmState === 'playing' ? 'paused' : 'playing';
+  //   if (alarmState === 'playing') {
+  //     alarm.pause();
+  //     clearInterval(this.state.playingProgress);
+  //   } else {
+  //     alarm.play();
+  //     this.updateProgressBar(alarm);
+  //   }
+  //   this.setState(prevState => ({
+  //     ...prevState,
+  //     alarmState: newAlarmState,
+  //   }));
+  // };
 
   render() {
     const { alarmDetail } = this.props.navigation.state.params;
-    const { alarm, alarmState, progress } = this.state;
+    const { playerStatus, progress } = this.state;
     return (
       <Container>
         <Toolbar
@@ -145,32 +175,39 @@ class AlarmShowDetail extends Component {
           source={{ uri: alarmDetail.backgroundImg }}
         />
         <Text style={styles.textAlarm}>{alarmDetail.description}</Text>
-        <Progress.Bar
-          progress={progress}
-          width={280}
-          color="white"
-          style={styles.progress}
-        />
-        <Container styles={styles.buttonAudioContainer}>
-          <Button
-            icon={alarmState === 'playing' ? 'pause' : 'play-arrow'}
-            text=""
-            raised
-            primary={alarmState !== 'playing'}
-            style={{
-              text: { textAlign: 'center' },
-              container: {
-                width: 100,
-                marginHorizontal: 140,
-                marginTop: 20,
-                borderStyle: 'solid',
-                borderWidth: 1,
-                borderColor: '#ffffff',
-              },
-            }}
-            onPress={() => this.actionAlarm(alarm, alarmState)}
+        <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+          <Progress.Bar
+            progress={progress}
+            width={300}
+            color="white"
+            style={styles.progress}
           />
-        </Container>
+          <Container styles={styles.buttonAudioContainer}>
+            <Button
+              icon={
+                playerStatus === 'play'
+                  ? 'pause'
+                  : playerStatus === 'stop' ? 'stop' : 'play-arrow'
+              }
+              text=""
+              raised
+              primary={playerStatus !== 'play'}
+              style={{
+                text: { textAlign: 'center' },
+                container: {
+                  marginTop: 20,
+                  width: 100,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  borderStyle: 'solid',
+                  borderWidth: 1,
+                  borderColor: '#ffffff',
+                },
+              }}
+              onPress={() => this.handlePressControl()}
+            />
+          </Container>
+        </View>
       </Container>
     );
   }

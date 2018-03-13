@@ -31,7 +31,7 @@ export const pullDataFromStorage = () => async dispatch => {
       userAlarms,
     });
   } catch (e) {
-    return console.warn(e);
+    return console.log('Cannot find Data');
   }
 };
 
@@ -40,8 +40,8 @@ export const saveDataToStorage = () => async (dispatch, getState) => {
     const dataString = JSON.stringify(await getState().userAlarms);
     return AsyncStorage.setItem('userAlarmsData', dataString)
       .then(() => dispatch({ type: 'SAVE_DATA_TO_STORAGE' }))
-      .catch(() => console.warn('Error'));
+      .catch(() => console.log('Error Saving to AsyncStorage'));
   } catch (e) {
-    return console.warn(e);
+    return console.log('Cannot save Data');
   }
 };
