@@ -21,7 +21,7 @@ import {
   pullDataFromStorage,
   saveDataToStorage,
 } from '../../redux/actionCreators';
-import { renderAlarmString, renderAlarmLabel } from '../../utils';
+import { renderAlarmString, renderAlarmLabel, imageAssets } from '../../utils';
 
 const UP = 1;
 const DOWN = -1;
@@ -132,7 +132,7 @@ class Home extends Component {
               flexDirection: 'row',
             }}
           >
-            <Image source={require('../../../assets/imgs/spoon.png')} />
+            <Image source={imageAssets.spoonLogo} />
             <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 20 }}>
               ブレインストレッチ
             </Text>

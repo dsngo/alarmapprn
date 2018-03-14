@@ -110,3 +110,6 @@ export function logicWeekday(checked, prevArr = [], value) {
   }
   return newArr;
 }
+export const imageAssets = {
+  spoonLogo: require('../assets/imgs/spoon.png'),
+}
