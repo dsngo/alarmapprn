@@ -3,7 +3,6 @@ import {
   StyleSheet,
   TextInput,
   Dimensions,
-  CameraRoll,
   ScrollView,
   Image,
   Text,
@@ -15,6 +14,7 @@ import { connect } from 'react-redux';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import Modal from 'react-native-modal';
 import PNotification from 'react-native-push-notification';
+import ImagePicker from 'react-native-image-picker';
 import {
   ListItem,
   Icon,
@@ -214,7 +214,7 @@ class EditAlarm extends Component {
         multiline
         maxHeight={100}
         maxWidth={this.width}
-        placeholder="ご自由に入力してください（再生画面に表示されます）"
+        placeholder={'ご自由に入力してください\n(再生画面に表示されます)'}
         value={this.state.userAlarm.description}
         onChangeText={e =>
           this.setState(prevState => ({
@@ -288,13 +288,13 @@ class EditAlarm extends Component {
       isVisible={this.state.isMusicsVisible}
       onBackdropPress={() => this.handleShowMusics(false)}
     >
-      {musics.map((e, i) => (
+      {musics.map(e => (
         <RadioButton
-          key={`music-${i}`}
+          key={`music-${e.name}`}
           label={e.name}
           checked={e.uri === this.state.userAlarm.sound}
           value="Value"
-          onCheck={checked => {
+          onCheck={() => {
             this.setState(prevState => ({
               ...prevState,
               isMusicsVisible: false,
@@ -308,21 +308,25 @@ class EditAlarm extends Component {
       ))}
     </Modal>
   );
-  handleGetPhotos = () => {
-    CameraRoll.getPhotos({
-      first: 20,
-      assetType: 'All',
-    })
-      .then(r => {
-        this.setState({ photos: r.edges });
-      })
-      .catch(err => {
-        console.log(err.toString()); // eslint-disable-line
-      });
+  selectPhotoTapped = () => {
+    const options = {
+      title: 'Select Photo',
+      quality: 1.0,
+      maxWidth: 500,
+      maxHeight: 500,
+      storageOptions: {
+        skipBackup: true,
+      },
+    };
+    ImagePicker.showImagePicker(options, rs => {
+      this.setState(prevState => ({
+        ...prevState,
+        userAlarm: { ...prevState.userAlarm, backgroundImg: rs.uri },
+      }));
+    });
   };
   // render method
   render() {
-    console.log(this.state.userAlarm); // eslint-disable-line
     return (
       <Container>
         <ScrollView
@@ -344,15 +348,9 @@ class EditAlarm extends Component {
             <ListItem
               divider
               leftElement="view-week"
-              centerElement={`Repeat ${renderWeekdayString([
-                0,
-                1,
-                2,
-                3,
-                4,
-                5,
-                6,
-              ])}`}
+              centerElement={`Repeat ${renderWeekdayString(
+                this.state.userAlarm.daysOfWeek
+              )}`}
               // rightElement="edit"
               // onRightElementPress={() => this.handleShowModal(true)}
             />
@@ -361,7 +359,7 @@ class EditAlarm extends Component {
               leftElement="insert-photo"
               centerElement="背景画像を選ぶ"
               rightElement="edit"
-              onRightElementPress={() => this.handleShowPhotos(true)}
+              onRightElementPress={() => this.selectPhotoTapped()}
             />
             <View
               style={{
@@ -413,7 +411,6 @@ class EditAlarm extends Component {
             />
           )}
           {this.renderTimePicker()}
-          {this.state.isPhotosVisible && this.renderPhotos()}
           {this.state.isModalVisible && this.renderModal()}
           {this.state.isMusicsVisible && this.renderMusics()}
         </ScrollView>
@@ -424,7 +421,7 @@ class EditAlarm extends Component {
 
 EditAlarm.propTypes = propTypes;
 
-const mapStateToProps = state => ({ // eslint-disable-line
+const mapStateToProps = () => ({
   // userAlarms: state.userAlarms,
 });
 const mapDispatchToProps = dispatch => ({

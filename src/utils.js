@@ -12,28 +12,19 @@ export function renderAlarmString(hours, minutes) {
 }
 
 export function stringifyWD(daysOfWeek) {
-  return daysOfWeek.map(e => {
-    switch (e) {
-      case 1:
-        return 'Sunday';
-      case 2:
-        return 'Monday';
-      case 3:
-        return 'Tuesday';
-      case 4:
-        return 'Wednesday';
-      case 5:
-        return 'Thursday';
-      case 6:
-        return 'Friday';
-      case 7:
-        return 'Saturday';
-      default:
-        return '';
-    }
-  });
+  return daysOfWeek.map(
+    (e = '') =>
+      ({
+        1: 'Sunday',
+        2: 'Monday',
+        3: 'Tuesday',
+        4: 'Wednesday',
+        5: 'Thursday',
+        6: 'Friday',
+        7: 'Saturday',
+      }[e])
+  );
 }
-
 export function renderWeekdayString(daysOfWeek = []) {
   const len = daysOfWeek.length;
   const sun = daysOfWeek.indexOf(1);
@@ -111,5 +102,5 @@ export function logicWeekday(checked, prevArr = [], value) {
   return newArr;
 }
 export const imageAssets = {
-  spoonLogo: require('../assets/imgs/spoon.png'),
-}
+  spoonLogo: require('../assets/imgs/spoon.png'), // eslint-disable-line
+};

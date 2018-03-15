@@ -89,7 +89,6 @@ class AlarmShowDetail extends Component {
     this.pInterval = setInterval(() => {
       this.sound.getCurrentTime(s => {
         this.setState({ progress: s / this.duration });
-        console.log(this.state.progress);
       });
     }, 1000);
     if (this.state.progress >= 1) {
@@ -105,61 +104,6 @@ class AlarmShowDetail extends Component {
       this.setState({ playerStatus: 'play' });
     }
   };
-  // playSound = soundName => {
-  //   // SAVE SOUND FILE TO : android/app/src/main/res/raw (Android) - Add Files to [PROJECTNAME] (IOS)
-  //   const sound = new Sound(soundName, Sound.MAIN_BUNDLE, err => {
-  //     if (err) {
-  //       console.log(err.message); // eslint-disable-line
-  //     } else {
-  //       sound.play();
-  //       this.updateProgressBar(sound);
-  //       this.setState(prevState => ({
-  //         ...prevState,
-  //         alarm: sound,
-  //       }));
-  //     }
-  //   });
-  // };
-
-  // updateProgressBar = sound => {
-  //   const playingProgress = setInterval(() => {
-  //     sound.getCurrentTime(seconds => {
-  //       const duration = sound.getDuration();
-  //       const progress = Math.round(seconds / duration * 100);
-  //       this.setState(prevState => ({
-  //         ...prevState,
-  //         progress,
-  //       }));
-  //     });
-  //   }, 100);
-  //   this.setState(prevState => ({
-  //     ...prevState,
-  //     playingProgress,
-  //   }));
-  //   if (this.state.progress >= 100) {
-  //     clearInterval(this.state.playingProgress);
-  //     this.setState(prevState => ({
-  //       ...prevState,
-  //       alarmState: 'stopped',
-  //     }));
-  //   }
-  // };
-
-  // actionAlarm = (alarm, alarmState) => {
-  //   const newAlarmState = alarmState === 'playing' ? 'paused' : 'playing';
-  //   if (alarmState === 'playing') {
-  //     alarm.pause();
-  //     clearInterval(this.state.playingProgress);
-  //   } else {
-  //     alarm.play();
-  //     this.updateProgressBar(alarm);
-  //   }
-  //   this.setState(prevState => ({
-  //     ...prevState,
-  //     alarmState: newAlarmState,
-  //   }));
-  // };
-
   render() {
     const { alarmDetail } = this.props.navigation.state.params;
     const { playerStatus, progress } = this.state;
@@ -185,9 +129,11 @@ class AlarmShowDetail extends Component {
           <Container styles={styles.buttonAudioContainer}>
             <Button
               icon={
+                /* eslint-disable */
                 playerStatus === 'play'
                   ? 'pause'
                   : playerStatus === 'stop' ? 'stop' : 'play-arrow'
+                /* eslint-enable */
               }
               text=""
               raised
