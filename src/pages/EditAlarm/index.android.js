@@ -6,7 +6,6 @@ import {
   ScrollView,
   Image,
   Text,
-  TouchableOpacity,
 } from 'react-native';
 import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
@@ -102,10 +101,8 @@ class EditAlarm extends Component {
       backgroundImg:
         'https://imagesvc.timeincapp.com/v3/mm/image?url=https%3A%2F%2Fimg1.southernliving.timeinc.net%2Fsites%2Fdefault%2Ffiles%2Fstyles%2F4_3_horizontal_inbody_900x506%2Fpublic%2Fimage%2F2016%2F02%2Fmain%2Fevergladesgettyimages-569057955-copy.jpg%3Fitok%3DrGqT412D&w=800&q=85',
     },
-    photos: [],
     isTimePickerVisible: false,
     isModalVisible: false,
-    isPhotosVisible: false,
     isMusicsVisible: false,
   };
   componentWillMount() {
@@ -115,14 +112,13 @@ class EditAlarm extends Component {
       });
     }
   }
-  componentDidMount() {
-    this.handleGetPhotos();
-  }
+  // componentDidMount() {
+  //   this.handleGetPhotos();
+  // }
   width = Dimensions.get('window').width / 0.8;
   handleShowTimePicker = isVisible =>
     this.setState({ isTimePickerVisible: isVisible });
   handleShowModal = isVisible => this.setState({ isModalVisible: isVisible });
-  handleShowPhotos = isVisible => this.setState({ isPhotosVisible: isVisible });
   handleShowMusics = isVisible => this.setState({ isMusicsVisible: isVisible });
   handleTimePicked = dateObj => {
     this.setState(prevState => ({
@@ -248,37 +244,6 @@ class EditAlarm extends Component {
           value={e.id}
           onCheck={checked => this.handleChangeWeekdays(e.name, checked, e.id)}
         />
-      ))}
-    </Modal>
-  );
-  renderPhotos = () => (
-    <Modal
-      style={styles.modal}
-      isVisible={this.state.isPhotosVisible}
-      onBackdropPress={() => this.handleShowPhotos(false)}
-    >
-      {this.state.photos.map((e, i) => (
-        <TouchableOpacity
-          onPress={() => {
-            this.setState(prevState => ({
-              ...prevState,
-              isPhotosVisible: false,
-              userAlarm: {
-                ...prevState.userAlarm,
-                backgroundImg: e.node.image.uri,
-              },
-            }));
-          }}
-        >
-          <Image
-            key={i} // eslint-disable-line
-            style={{
-              width: 50,
-              height: 50,
-            }}
-            source={{ uri: e.node.image.uri }}
-          />
-        </TouchableOpacity>
       ))}
     </Modal>
   );
