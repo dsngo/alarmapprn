@@ -104,3 +104,7 @@ export function logicWeekday(checked, prevArr = [], value) {
 export const imageAssets = {
   spoonLogo: require('../assets/imgs/spoon.png'), // eslint-disable-line
 };
+export const generateUID = timeId => {
+  const a = new Date(timeId);
+  return `${a.getFullYear()}${a.getMonth() + 1}${a.getDate()}`;
+};

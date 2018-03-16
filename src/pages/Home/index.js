@@ -17,7 +17,6 @@ import { connect } from 'react-redux';
 // import MaterialSwitch from '../../components/Switch';
 import Container from '../../components/Container';
 import {
-  updateUserAlarm,
   pullDataFromStorage,
   saveDataToStorage,
 } from '../../redux/actionCreators';
@@ -28,8 +27,8 @@ const DOWN = -1;
 function testNavigate({ navigation }) {
   PNotification.configure({
     onNotification(notification) {
-      // console.log('NOTIFICATION:', notification); // eslint-disable-line
-      navigation.navigate('alarmShow', { key: notification.key });
+      console.log('NOTIFICATION:', notification); // eslint-disable-line
+      navigation.navigate('alarmShow', { id: notification.id });
     },
   });
 }
@@ -158,10 +157,10 @@ class Home extends Component {
     );
   };
   renderAlarm = (alarmContent, route) => {
-    const { hours, minutes, daysOfWeek, label } = alarmContent;
+    const { hours, minutes, daysOfWeek, label, id } = alarmContent;
     const { isEditing } = this.state;
     return (
-      <View key={`renderedAlarm-${alarmContent.id}`}>
+      <View key={`renderedAlarm-${id}`}>
         <ListItem
           divider
           numberOfLines="dynamic"
@@ -187,7 +186,7 @@ class Home extends Component {
                   userAlarm: alarmContent,
                 })
               : this.props.navigation.navigate('alarmShow', {
-                  key: alarmContent.id.toString(),
+                  id: id.toString(),
                 })
           }
           rightElement={isEditing ? 'keyboard-arrow-right' : 'alarm'}
@@ -216,8 +215,6 @@ const mapStateToProps = state => ({
   userAlarms: state.userAlarms,
 });
 const mapDispatchToProps = dispatch => ({
-  updateUserAlarm: (alarmId, key, value) =>
-    dispatch(updateUserAlarm(alarmId, key, value)),
   pullDataFromStorage: () => dispatch(pullDataFromStorage()),
   saveDataToStorage: () => dispatch(saveDataToStorage()),
 });

@@ -101,7 +101,7 @@ android {
         applicationId "com.alarmapprn"
         minSdkVersion 16
         targetSdkVersion 22
-        versionCode 3
+        versionCode 4
         versionName "1.2-pre-alpha"
         ndk {
             abiFilters "armeabi-v7a", "x86"
