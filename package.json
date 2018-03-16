@@ -5,11 +5,13 @@
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "test": "jest",
-    "rnra": "yarn a:clean && react-native run-android",
+    "rnra": "react-native run-android",
     "a:stop": "cd android && ./gradlew --stop && cd ..",
     "a:clean": "cd android && ./gradlew clean && cd ..",
-    "a:release": "yarn a:clean && cd android && ./gradlew assembleRelease && cd ..",
+    "a:release": "yarn a:stop && yarn a:clean && cd android && ./gradlew assembleRelease && cd ..",
     "a:tr": "react-native run-android --variant=release",
+    "g:c":"git add . && git commit -m",
+    "g:p":"git push",
     "lint": "eslint src/**/*.{js,jsx} --quiet"
   },
   "rnpm": {
