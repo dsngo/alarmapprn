@@ -149,7 +149,7 @@ class EditAlarm extends Component {
     //     1}-${a.getDate()}T`
     // );
     const delay = miliStr - Date.now();
-    console.warn(`test : ${delay > 0 ? delay : 1000}`);
+    // console.warn(`test : ${delay > 0 ? delay : 1000}`);
     if (state.params) {
       this.props.updateUserAlarm(
         state.params.userAlarm.id,
@@ -162,9 +162,9 @@ class EditAlarm extends Component {
       `20${a.getYear() - 100}/${a.getMonth() +
         1}/${a.getDate()} ${a.getHours()}:${a.getMinutes() + 1}`
     );
-    AlarmAndroid.alarmSetRTC(alarmId, b, 8.64e7);
-    AlarmAndroid.alarmExists(alarmId).then(([exists]) =>
-      console.warn(`test6 ${exists ? 'exists' : 'does not exist'}`)
+    // AlarmAndroid.alarmSetRTC(alarmId, b, 8.64e7);
+    // AlarmAndroid.alarmExists(alarmId).then(([exists]) =>
+    //   console.warn(`test6 ${exists ? 'exists' : 'does not exist'}`)
     );
     // const testDate = new Date();
     // const alarmNotifData = {

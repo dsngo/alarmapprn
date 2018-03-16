@@ -27,7 +27,7 @@ const DOWN = -1;
 function testNavigate({ navigation }) {
   PNotification.configure({
     onNotification(notification) {
-      console.log('NOTIFICATION:', notification); // eslint-disable-line
+      // console.log('NOTIFICATION:', notification); // eslint-disable-line
       navigation.navigate('alarmShow', { id: notification.id });
     },
   });

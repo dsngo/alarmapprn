@@ -78,7 +78,7 @@ class AlarmShowDetail extends Component {
     // SAVE SOUND FILE TO : android/app/src/main/res/raw (Android) - Add Files to [PROJECTNAME] (IOS)
     const sound = new Sound(soundName, Sound.MAIN_BUNDLE, err => {
       if (err) {
-        console.log(err.message); // eslint-disable-line
+        // console.log(err.message); // eslint-disable-line
       } else {
         sound.play();
         this.updateProgressBar(sound);

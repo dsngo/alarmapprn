@@ -156,7 +156,7 @@ class EditAlarm extends Component {
     } else {
       const { hours, minutes, id } = this.state.userAlarm;
       const alarmId = generateUID(id);
-      console.log(alarmId); // eslint-disable-line
+      // console.log(alarmId); // eslint-disable-line
       const a = new Date();
       const b = new Date(
         `20${a.getYear() - 100}/${a.getMonth() +
