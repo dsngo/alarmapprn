@@ -106,5 +106,5 @@ export const imageAssets = {
 };
 export const generateUID = timeId => {
   const a = new Date(timeId);
-  return `${a.getFullYear()}${a.getMonth() + 1}${a.getDate()}`;
+  return `${a.getDate()}${a.getHours()}${a.getMinutes()}${a.getSeconds()}`;
 };
