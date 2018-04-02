@@ -66,15 +66,17 @@ class AlarmShowDetail extends Component {
 
   componentWillMount() {
     // SAVE SOUND FILE TO : android/app/src/main/res/raw (Android) - Add Files to [PROJECTNAME] (IOS)
-    this.sound = new Sound(
-      this.props.navigation.state.params.alarmDetail.sound,
-      Sound.MAIN_BUNDLE,
-      () => {
-        this.sound.play();
-        this.duration = this.sound.getDuration();
-        this.handleUpdateProgressBar();
-      }
-    );
+    if (this.props.navigation.state.params.alarmDetail.sound) {
+      this.sound = new Sound(
+        this.props.navigation.state.params.alarmDetail.sound,
+        Sound.MAIN_BUNDLE,
+        () => {
+          this.sound.play();
+          this.duration = this.sound.getDuration();
+          this.handleUpdateProgressBar();
+        }
+      );
+    }
   }
 
   componentWillUnmount() {

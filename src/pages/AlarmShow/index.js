@@ -1,8 +1,6 @@
 import { StyleSheet, View } from 'react-native';
-import { connect } from 'react-redux';
 import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
-
 import { Toolbar, Icon, Button } from 'react-native-material-ui';
 import Container from '../../components/Container';
 
@@ -20,7 +18,7 @@ const styles = StyleSheet.create({
 });
 
 const propTypes = {
-  userAlarms: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  // userAlarms: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   navigation: PropTypes.shape({
     goBack: PropTypes.func.isRequired,
     navigate: PropTypes.func.isRequired,
@@ -29,15 +27,30 @@ const propTypes = {
 };
 class AlarmShow extends Component {
   render() {
-    const { navigation: { navigate } } = this.props;
-    const alarmDetail = this.props.userAlarms.find(
-      e => e.id.toString() === this.props.navigation.state.params.id
-    );
+    const { navigation: { navigate, goBack, state } } = this.props;
+    // const alarmDetail = this.props.userAlarms.find(
+    //   e => e.id.toString() === this.props.navigation.state.params.id
+    // );
+    const alarmDetail = (state.params && state.params.alarmObj) || {
+      id: 0,
+      hours: 0,
+      minutes: 0,
+      daysOfWeek: [],
+      active: true,
+      snooze: true,
+      label: 'Alarm',
+      repeat: false,
+      sound: 'meditation.mp3',
+      description: 'New and beautiful Sunshine',
+      backgroundImg:
+        'https://imagesvc.timeincapp.com/v3/mm/image?url=https%3A%2F%2Fimg1.southernliving.timeinc.net%2Fsites%2Fdefault%2Ffiles%2Fstyles%2F4_3_horizontal_inbody_900x506%2Fpublic%2Fimage%2F2016%2F02%2Fmain%2Fevergladesgettyimages-569057955-copy.jpg%3Fitok%3DrGqT412D&w=800&q=85',
+    };
+    // console.log(this.props.navigation.state.params.alarmObj, alarmDetail);
     return (
       <Container>
         <Toolbar
           leftElement="arrow-back"
-          onLeftElementPress={() => this.props.navigation.goBack()}
+          onLeftElementPress={() => goBack()}
           centerElement=""
         />
         <View style={styles.iconAlarm}>
@@ -58,10 +71,5 @@ class AlarmShow extends Component {
     );
   }
 }
-
 AlarmShow.propTypes = propTypes;
-const mapStateToProps = state => ({
-  userAlarms: state.userAlarms,
-});
-
-export default connect(mapStateToProps)(AlarmShow);
+export default AlarmShow;

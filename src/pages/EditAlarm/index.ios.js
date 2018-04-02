@@ -136,19 +136,19 @@ class EditAlarm extends Component {
   };
   handleConfirm = () => {
     const { navigation: { goBack, state } } = this.props;
-    const { hours, minutes } = this.state.userAlarm;
-    const a = new Date();
-    const alarmId = this.state.userAlarm.id.toString();
+    // const { hours, minutes } = this.state.userAlarm;
+    // const a = new Date();
+    // const alarmId = this.state.userAlarm.id.toString();
     // console.warn(Date.parse(a).toString());
-    const miliStr = Date.parse(
-      `20${a.getYear() - 100}/${a.getMonth() +
-        1}/${a.getDate()} ${hours}:${minutes}`
-    );
+    // const miliStr = Date.parse(
+    //   `20${a.getYear() - 100}/${a.getMonth() +
+    //     1}/${a.getDate()} ${hours}:${minutes}`
+    // );
     // const miliStr = Date.parse(
     //   `20${a.getYear() - 100}-${a.getMonth() +
     //     1}-${a.getDate()}T`
     // );
-    const delay = miliStr - Date.now();
+    // const delay = miliStr - Date.now();
     // console.warn(`test : ${delay > 0 ? delay : 1000}`);
     if (state.params) {
       this.props.updateUserAlarm(
@@ -158,14 +158,14 @@ class EditAlarm extends Component {
     } else {
       this.props.addUserAlarm(this.state.userAlarm);
     }
-    const b = new Date(
-      `20${a.getYear() - 100}/${a.getMonth() +
-        1}/${a.getDate()} ${a.getHours()}:${a.getMinutes() + 1}`
-    );
+    // const b = new Date(
+    //   `20${a.getYear() - 100}/${a.getMonth() +
+    //     1}/${a.getDate()} ${a.getHours()}:${a.getMinutes() + 1}`
+    // );
     // AlarmAndroid.alarmSetRTC(alarmId, b, 8.64e7);
     // AlarmAndroid.alarmExists(alarmId).then(([exists]) =>
     //   console.warn(`test6 ${exists ? 'exists' : 'does not exist'}`)
-    );
+    // );
     // const testDate = new Date();
     // const alarmNotifData = {
     //   id: '12345', // Required
@@ -189,7 +189,7 @@ class EditAlarm extends Component {
   };
   handleRemoveAlarm = () => {
     this.props.removeUserAlarm(this.props.navigation.state.params.userAlarm.id);
-    AlarmAndroid.clearAlarm(this.state.userAlarm.id.toString());
+    // AlarmAndroid.clearAlarm(this.state.userAlarm.id.toString());
     return this.props.navigation.goBack();
   };
   // render parts

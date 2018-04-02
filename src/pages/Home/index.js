@@ -27,8 +27,8 @@ const DOWN = -1;
 function testNavigate({ navigation }) {
   PNotification.configure({
     onNotification(notification) {
-      // console.log('NOTIFICATION:', notification); // eslint-disable-line
-      navigation.navigate('alarmShow', { id: notification.id });
+      console.log('NOTIFICATION:', notification); // eslint-disable-line
+      navigation.navigate('alarmShow', { alarmObj: notification.alarmObj });
     },
   });
 }
@@ -57,21 +57,6 @@ class Home extends Component {
   componentWillUnmount() {
     this.props.saveDataToStorage();
   }
-
-  handleOpenURL = event => {
-    this.navigate(event.url);
-  };
-
-  navigate = url => {
-    const { navigate } = this.props.navigation;
-
-    const route = url.replace(/.*?:\/\//g, '');
-    // const id = route.match(/\/([^\/]+)\/?$/)[1];
-    const routeName = route.split('/')[0];
-    if (routeName === 'alarmshow') {
-      navigate('alarmShow');
-    }
-  };
 
   offset = 0;
   scrollDirection = 0;
@@ -156,11 +141,11 @@ class Home extends Component {
       />
     );
   };
-  renderAlarm = (alarmContent, route) => {
+  renderAlarm = (alarmContent, i, route) => {
     const { hours, minutes, daysOfWeek, label, id } = alarmContent;
     const { isEditing } = this.state;
     return (
-      <View key={`renderedAlarm-${id}`}>
+      <View key={`renderedAlarm-${id}-${i}`}>
         <ListItem
           divider
           numberOfLines="dynamic"
@@ -203,7 +188,9 @@ class Home extends Component {
           keyboardDismissMode="interactive"
           onScroll={this.onScroll}
         >
-          {this.props.userAlarms.map(e => this.renderAlarm(e, 'editAlarm'))}
+          {this.props.userAlarms.map((e, i) =>
+            this.renderAlarm(e, i, 'editAlarm')
+          )}
         </ScrollView>
       </Container>
     );
