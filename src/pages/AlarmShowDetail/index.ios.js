@@ -174,8 +174,8 @@ class AlarmShowDetail extends Component {
   }
 }
 
-const mapStateToProps = state => ({});
-const mapDispatchToProps = dispatch => ({});
+const mapStateToProps = state => ({}); // eslint-disable-line
+const mapDispatchToProps = dispatch => ({}); // eslint-disable-line
 
 AlarmShowDetail.propTypes = propTypes;
 

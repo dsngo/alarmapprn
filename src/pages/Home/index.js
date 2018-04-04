@@ -24,10 +24,10 @@ import { renderAlarmString, renderAlarmLabel, imageAssets } from '../../utils';
 
 const UP = 1;
 const DOWN = -1;
-function testNavigate({ navigation }) {
+function initializeNotification({ navigation }) {
   PNotification.configure({
     onNotification(notification) {
-      console.log('NOTIFICATION:', notification); // eslint-disable-line
+      // console.log('NOTIFICATION:', notification); // eslint-disable-line
       navigation.navigate('alarmShow', { alarmObj: notification.alarmObj });
     },
   });
@@ -52,7 +52,7 @@ class Home extends Component {
       this.state.isEditing = false;
     }
     this.props.pullDataFromStorage();
-    testNavigate(this.props);
+    initializeNotification(this.props);
   }
   componentWillUnmount() {
     this.props.saveDataToStorage();
